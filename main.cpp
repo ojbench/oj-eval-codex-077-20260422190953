@@ -9,13 +9,6 @@ int main() {
     ca.InsertArrays(a, 3);
     int b[2] = {4,5};
     ca.InsertArrays(b, 2);
-    if (ca.At(0,0) + ca.At(1,1) == 6) {
-        // Print nothing according to typical class-only problems; but
-        // to be deterministic, print 0.
-        std::printf("0\n");
-    } else {
-        std::printf("0\n");
-    }
+    (void)ca; // suppress unused warnings
     return 0;
 }
-

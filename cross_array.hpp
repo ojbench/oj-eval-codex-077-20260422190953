@@ -32,7 +32,7 @@ public:
                 lines_[i] = nullptr;
             } else {
                 int n = o.sizes_[i];
-                lines_[i] = n ? new int[n] : nullptr;
+                lines_[i] = new int[n > 0 ? n : 0];
                 for (int j = 0; j < n; ++j) lines_[i][j] = o.lines_[i][j];
             }
         }
@@ -52,13 +52,14 @@ public:
 
     bool InsertArrays(const int * Input, int size) {
         if (used_ >= capacity_) return false;
-        // find first nullptr slot
+        // place at the first available (nullptr) slot; sequential from 0 initially
         int idx = -1;
         for (int i = 0; i < capacity_; ++i) {
             if (lines_[i] == nullptr) { idx = i; break; }
         }
-        if (idx == -1) return false; // all occupied but used_ tracking says full
-        lines_[idx] = size ? new int[size] : nullptr;
+        if (idx == -1) return false; // should not happen if used_ tracked correctly
+        // allocate even for size == 0 to mark occupancy distinctly from nullptr
+        lines_[idx] = new int[size > 0 ? size : 0];
         sizes_[idx] = size;
         for (int j = 0; j < size; ++j) lines_[idx][j] = Input[j];
         ++used_;
@@ -117,4 +118,3 @@ public:
 };
 
 } // namespace sjtu
-
